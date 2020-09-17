@@ -1,8 +1,14 @@
+
+require('dotenv').config()
 const bodyParser = require('body-parser')
 const express = require("express")
 const app = express()
 const cors =  require('cors')
-const router = require("./routes/routes")
+const consign = require("consign")
+
+const noAuthorization = [
+    '/auth'
+]
 
  
 app.use(cors())
@@ -11,8 +17,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+//Middleware para autenticar usuario
+app.use((req, res, next) => require('./src/middleware/authMiddleware').auth(req, res, next, noAuthorization))
 
-//Rotas 
-app.use("/",router);
+consign().include('src/routes').into(app)
 
 module.exports = app
