@@ -10,9 +10,10 @@ class UsuarioController{
 
     async create(req, res){
 
-       res.json(req.loggedUser)
-
-       req.loggedUser
+       //res.json(req.loggedUser)
+    
+       console.log('CHEGUEI AUTENTICADO')
+       
       
     }
 

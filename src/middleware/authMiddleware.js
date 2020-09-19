@@ -10,6 +10,8 @@ const secret = process.env.APP_SECRET
 
         const authToken = req.headers['authorization']
 
+        //console.log('AUTTHORIZATION',authToken)
+
         if(authToken !== undefined){
             const bearer = authToken.split(' ')
             var token = bearer[1]
