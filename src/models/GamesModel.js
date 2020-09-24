@@ -4,11 +4,11 @@ const conn = require('../database/dbconfig')
 
 class GamesModel {
 
-    async listarGames(limite, offset){      
-
+    async listarGames(limite, offset){    
+        
         let model =  conn('games')
         let totalCount = await model.clone().count()
-        let data = await model.clone().offset(offset).limit(limite)
+        let data = await model.clone().offset(Number (offset)).limit(Number (limite))
         .select('*')
         .orderBy('descricao','id')           
 
