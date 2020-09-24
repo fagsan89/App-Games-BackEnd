@@ -1,7 +1,10 @@
 const UsuarioModel = require('../models/UsuarioModel')
 const jwt = require("jsonwebtoken")
+const bcrypt = require('bcrypt')
 
 const secret = process.env.APP_SECRET
+
+//console.log(secret)
 
 class AuthLoginController{ 
 
@@ -16,7 +19,10 @@ class AuthLoginController{
 
             if(localizarUsuario.length > 0){
 
-                if(localizarUsuario[0].password === password){
+                //verifica se as senhas são iguais, retorna true ou false
+                const checkPassword = bcrypt.compare(password, localizarUsuario[0].password)
+
+                if(await checkPassword && localizarUsuario[0].email === email){
                   
                     jwt.sign({nome:localizarUsuario[0].name, id:localizarUsuario[0].id, email: localizarUsuario[0].email}, secret, {expiresIn:'8h'}, (err, token) =>{
 
@@ -24,8 +30,18 @@ class AuthLoginController{
                             res.status(400)
                             res.json({error: "Falha interna"})
                         }else{
+
+                            
                             res.status(200)
-                            res.json({token: token})
+                            res.json({
+                                user:{
+                                    id:localizarUsuario[0].id,
+                                    name: localizarUsuario[0].name,
+                                    email:localizarUsuario[0].email
+                                },
+                                
+                                token: token
+                            })
                         }
                     })
                 }else{

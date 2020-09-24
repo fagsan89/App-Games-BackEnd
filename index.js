@@ -7,7 +7,8 @@ const cors =  require('cors')
 const consign = require("consign")
 
 const noAuthorization = [
-    '/auth'
+    '/auth',
+    '/usuario/cadastrar'
 ]
 
  

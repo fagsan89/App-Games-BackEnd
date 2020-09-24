@@ -17,6 +17,21 @@ class UsuarioModel {
        
       
     }
+
+    async cadastrarUsuario(data){
+
+        const qry = conn('usuario')
+        .insert(data)
+        .returning("*")   
+        
+        //console.log(qry.toString())
+        
+        return await qry
+        .then(res => res)
+        .catch(err => err)
+       
+      
+    }
 }
 
 
