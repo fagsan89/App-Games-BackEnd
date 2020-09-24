@@ -22,7 +22,7 @@ class AuthLoginController{
                 //verifica se as senhas são iguais, retorna true ou false
                 const checkPassword = bcrypt.compare(password, localizarUsuario[0].password)
 
-                if(await checkPassword && localizarUsuario[0].email === email){
+                if(await checkPassword && localizarUsuario[0].email === email){ 
                   
                     jwt.sign({nome:localizarUsuario[0].name, id:localizarUsuario[0].id, email: localizarUsuario[0].email}, secret, {expiresIn:'8h'}, (err, token) =>{
 
